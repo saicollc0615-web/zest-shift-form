@@ -35,16 +35,17 @@
     color: var(--ink);
     line-height: 1.7;
     min-height: 100vh;
-    padding: 16px;
+    padding: 12px 8px;
+    overflow-x: hidden;
   }
-  .app { max-width: 640px; margin: 0 auto; }
+  .app { max-width: 640px; margin: 0 auto; width: 100%; }
   .hero { text-align: center; padding: 20px 0 12px; }
   .hero-emblem { display: inline-block; font-size: 3rem; line-height: 1; margin-bottom: 6px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08)); }
   .hero h1 { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 900; font-size: 1.5rem; margin: 4px 0 2px; letter-spacing: 0.05em; }
   .hero-sub { font-family: 'Zen Maru Gothic', sans-serif; font-size: 0.95rem; color: var(--ink-sub); margin: 0; }
   .role-badge { display: inline-block; padding: 4px 14px; background: var(--lemon); color: var(--ink); font-weight: 700; font-size: 0.85rem; border-radius: 50px; margin-top: 8px; font-family: 'Zen Maru Gothic', sans-serif; }
 
-  .card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); padding: 24px 20px; margin: 16px 0; border: 2px solid var(--line); }
+  .card { background: var(--white); border-radius: 20px; box-shadow: var(--shadow); padding: 20px 14px; margin: 16px 0; border: 2px solid var(--line); overflow: hidden; box-sizing: border-box; }
   .card-title { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 1.2rem; margin: 0 0 16px; display: flex; align-items: center; gap: 8px; color: var(--ink); }
   .card-title::before { content: ''; display: inline-block; width: 6px; height: 24px; background: var(--lemon); border-radius: 3px; }
 
@@ -86,15 +87,15 @@
   .mark-on { background: var(--green-soft); border: 2px solid var(--green-strong); color: var(--green-strong); }
   .mark-half { background: var(--lemon-light); border: 2px solid var(--lemon); color: #A88020; }
 
-  .calendar { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+  .calendar { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; width: 100%; }
   .cal-dow { text-align: center; font-size: 0.8rem; font-weight: 700; padding: 6px 0; color: var(--ink-sub); }
   .cal-dow.sun { color: var(--pink-strong); }
   .cal-dow.sat { color: #4A8FD9; }
-  .cal-cell { aspect-ratio: 1; background: white; border: 2px solid var(--line); border-radius: 10px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 500; cursor: pointer; transition: transform 0.08s, background 0.2s; position: relative; padding: 4px 2px; user-select: none; }
+  .cal-cell { aspect-ratio: 1; background: white; border: 2px solid var(--line); border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 500; cursor: pointer; transition: transform 0.08s, background 0.2s; position: relative; padding: 2px 1px; user-select: none; min-width: 0; overflow: hidden; box-sizing: border-box; }
   .cal-cell:active { transform: scale(0.95); }
   .cal-cell.empty { visibility: hidden; }
   .cal-cell .date-num { font-size: 1rem; line-height: 1; }
-  .cal-cell .holiday-tag { font-size: 0.6rem; color: var(--pink-strong); margin-top: 2px; font-weight: 500; }
+  .cal-cell .holiday-tag { font-size: 0.52rem; color: var(--pink-strong); margin-top: 1px; font-weight: 500; line-height: 1.1; text-align: center; max-width: 100%; overflow: hidden; }
   .cal-cell.sun .date-num { color: var(--pink-strong); }
   .cal-cell.sat .date-num { color: #4A8FD9; }
   .cal-cell.off { background: var(--pink-soft); border-color: var(--pink-strong); }
@@ -139,11 +140,31 @@
   .footer { text-align: center; font-size: 0.8rem; color: var(--ink-sub); padding: 24px 0; opacity: 0.7; }
   .footer::before { content: '🍋'; font-size: 1.2rem; display: block; margin-bottom: 4px; }
 
+  /* タブレット・大きめスマホ */
+  @media (max-width: 480px) {
+    html { font-size: 16px; }
+    body { padding: 10px 6px; }
+    .card { padding: 18px 12px; }
+    .calendar { gap: 3px; }
+    .cal-cell { border-width: 1.5px; }
+    .cal-cell .date-num { font-size: 0.95rem; }
+    .cal-cell .holiday-tag { font-size: 0.5rem; }
+    .cal-dow { font-size: 0.75rem; padding: 4px 0; }
+  }
+  /* 小さめスマホ（iPhone SE等） */
   @media (max-width: 380px) {
     html { font-size: 15px; }
-    .card { padding: 20px 16px; }
-    .cal-cell .date-num { font-size: 0.9rem; }
+    body { padding: 8px 4px; }
+    .card { padding: 16px 8px; }
+    .calendar { gap: 2px; }
+    .cal-cell { border-radius: 6px; padding: 1px; }
+    .cal-cell .date-num { font-size: 0.85rem; }
+    .cal-cell .holiday-tag { font-size: 0.45rem; }
+    .cal-cell.am-off::after, .cal-cell.pm-off::after { font-size: 0.5rem; }
     .btn { padding: 14px 16px; font-size: 1rem; }
+    .legend { grid-template-columns: 1fr; gap: 6px; padding: 10px; }
+    .legend-item { font-size: 0.85rem; }
+    .hero h1 { font-size: 1.3rem; }
   }
 </style>
 </head>
@@ -255,7 +276,7 @@
 
   <footer class="footer">
     ヘルパーステーション れもん<br>
-    シフト希望提出フォーム（パート版）v1.4
+    シフト希望提出フォーム（パート版）v1.5
   </footer>
 </div>
 
